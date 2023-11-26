@@ -1,0 +1,16 @@
+# CodeIt
+
+## CodeIt is a StackOverflow-like forums website where you can ask and answer programming related questions. You can also comment on answers and vote on them. It is built using primarily Python Django and utilizes SQLite for database operations. 
+
+This project was created solely for personal reasons and with no intention of going into production.
+
+This project is still a work in progress and may contain bugs that haven't been patched yet. Additional functionality may be added down the line to further improve the website.
+
+## Getting Started
+
+This website is built using Python version 3.10.8 and Django version 4.1.1
+
+### Prerequisites
+
+The API requires djangorestframework which can be found here https://www.django-rest-framework.org/
+
