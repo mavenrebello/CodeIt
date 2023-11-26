@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+
+
+<div class="comment-submit-main-div">
+
+
+    <div class="answer-main-div">
+        <div class="answer-votes-div">
+        {{answer.votes}}
+        </div>
+        <div class="answer-info-div">
+            <div class="user-answer-div">
+                <span class="user-span">@{{answer.user}}</span>
+            </div>
+            <div class="answer-body-div">
+                <span class="question-body-span">{{answer.body}}</span>
+            </div>
+            <div class="answer-code-div">
+                <span class="question-code-span">{{answer.code}}</span>
+            </div>
+            <div class="created-edit-delete-div">
+                <div class="created-edited-div">
+                    <span class="created-div">{{answer.created|timesince}}</span>
+                    <span class="edited-div">{% if answer.created != answer.updated %}[EDITED]{% endif %}</span>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+
+
+    <div class="form-div">
+        <form method="POST" action="">
+        {% csrf_token %}
+        <input class="comment-input" type="text" name="body" placeholder="make a comment..." value="{{comment.body}}" />
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock content %}

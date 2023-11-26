@@ -1,0 +1,35 @@
+
+
+
+<div class="navbar">
+    <div class="navbar-header-logo">
+        <div class="navbar-logo">
+            &#x2630;C
+        </div>
+        <div class="navbar-header">
+            <span class="navbar-header">
+                <a class="navbar-header-link" href='/'>
+                    <span class="header">CodeIt</span>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div class="navbar-username-login">
+        {% if request.user.is_authenticated %}
+        <div>
+            <span class="navbar-username">
+            Logged in as: @{{request.user}}
+            </span>
+        </div>
+        <div class="login-logout">
+            <a class="login-logout-link" href="{% url 'logout' %}">
+                Logout
+            </a>
+        </div>
+        {% else %}
+        <div class="login-logout">
+        <a class="login-logout-link" href="{% url 'login' %}">Log in</a>
+        </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,118 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+<div class="question-page-main-div">
+    <div class="question-div-question-page">
+        <div class="question-votes-div">
+            {{questions.votes}}
+        </div>
+        <div class="question-info-div">
+            <div class="user-div">
+                <span class="user-span">@{{questions.user}}</span>
+            </div>
+            <div class="topic-div">
+                <span class="topic-span">{{questions.topic}}</span>
+            </div>
+            <div class="question-header-div">
+                <span class="question-header-span">{{questions.header}}</span>
+            </div>
+            <div class="question-body-div">
+                <span class="question-body-span">{{questions.body}}</span>
+            </div>
+            <div class="question-code-div">
+                <span class="question-code-span">{{questions.code}}</span>
+            </div>
+            <div class="created-edit-delete-div">
+                <div class="created-edited-div">
+                    <span class="created-div">{{questions.created|timesince}}</span>
+                    <span class="edited-div">{% if questions.created != questions.updated %}[EDITED]{% endif %}</span>
+                </div>
+                <div class="edit-delete-div">
+                    {% if request.user == questions.user %}
+                    <a class="edit-delete" href="{% url "delete-question"  questions.id %}">Delete</a>
+                    <a class="edit-delete" href="{% url "update-question"  questions.id %}">Edit</a>
+                    {% endif %}
+                </div>
+            </div>
+            <span class="reply">
+                <a href="{% url 'answer-submit' questions.id %}">&rdca;Reply</a>
+            </span>
+        </div>
+    </div>
+    {% for answer in answers %}
+    <div class="answer-main-div">
+        <div class="answer-votes-div">
+        {{answer.votes}}
+        </div>
+        <div class="answer-info-div">
+            <div class="user-answer-div">
+                <span class="user-span">@{{answer.user}}</span>
+            </div>
+            <div class="answer-body-div">
+                <span class="question-body-span">{{answer.body}}</span>
+            </div>
+            <div class="answer-code-div">
+                <span class="question-code-span">{{answer.code}}</span>
+            </div>
+            <div class="created-edit-delete-div">
+                <div class="created-edited-div">
+                    <span class="created-div">{{answer.created|timesince}}</span>
+                    <span class="edited-div">{% if answer.created != answer.updated %}[EDITED]{% endif %}</span>
+                </div>
+                <div class="edit-delete-div">
+                    {% if request.user == answer.user %}
+                    <a class="edit-delete" href="{% url "delete-answer"  answer.id %}">Delete</a>
+                    <a class="edit-delete" href="{% url "update-answer"  answer.id %}">Edit</a>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <span class="reply">
+                <a href="{% url 'comment-submit' answer.id %}">&rdca;Reply</a>
+            </span>
+            {% for comment in comments %}
+            <div class="comment-main-div">
+               
+                    {% if comment.answer == answer %}
+                        <div class="comment-votes-div">
+                            {{comment.votes}}
+                        </div>
+                        <div class="comment-info-div">
+                            <div class="comment-user-div">
+                                <span class="user-span">@{{comment.user}}</span>
+                            </div>
+                            <div class="comment-body-div">
+                                <span class="question-body-span">{{comment.body}}</span>
+                            </div>
+                            <div class="created-edit-delete-div-question-page">
+                                <div class="created-edited-div">
+                                    <span class="created-div">{{comment.created|timesince}}</span>
+                                    <span class="edited-div">{% if comment.created != comment.updated %}[EDITED]{% endif %}</span>
+                                </div>
+                                <div class="edit-delete-div">
+                                    {% if request.user == comment.user %}
+                                    <a class="edit-delete" href="{% url "delete-comment"  comment.id %}">Delete</a>
+                                    <a class="edit-delete" href="{% url "update-comment"  comment.id %}">Edit</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+               
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+    {% endfor %}
+</div>
+<h2>
+    
+    
+
+</h2>
+
+
+
+{% endblock content %}

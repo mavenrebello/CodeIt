@@ -1,0 +1,97 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+<div class='home-main-div'>
+    
+    <div class='home-topics-div'>
+        <div class="tag-filter-div-all">
+            <a href="{% url "question-submit" %}">Ask a Question!</a>
+        </div>
+        <div class="tag-filter-div-all">
+            <a href="{% url 'home' %}">All</a>
+        </div>
+        {% for tag in tags %}
+            <div class="tag-filter-div-tags">
+                <a class="tags-link" href="{% url 'home' %}?q={{tag}}">{{tag}}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class='home-questions-div'>
+        {% for question in questions %}
+            <div class="question-div">
+                <div class="question-votes-div">
+                    {{question.votes}}
+                </div>
+                <div class="question-info-div">
+                    <div class="user-div">
+                        <span class="user-span">@{{question.user}}</span>
+                    </div>
+                    <div class="topic-div">
+                        <span class="topic-span">{{question.topic}}</span>
+                    </div>
+                    <div class="question-header-div">
+                        <span class="question-header-span"><a class="question-link" href="{% url "question-page" question.id %}">{{question.header}}</a></span>
+                    </div>
+                    <div class="created-edit-delete-div">
+                        <div class="created-edited-div">
+                            <span class=created-div"">{{question.created|timesince}}</span>
+                            <span class="edited-div">{% if question.created != question.updated %}[EDITED]{% endif %}</span>
+                        </div>
+                        <div class="edit-delete-div">
+                            {% if request.user == question.user %}
+                            <a class="edit-delete" href="{% url "delete-question"  question.id %}">Delete</a>
+                            <a class="edit-delete" href="{% url "update-question"  question.id %}">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
+
+<!--{% for question in questions %}
+
+        <div class="question-div">
+            <div class="user-tag-div">
+                <div class="user">@{{question.user}}</div>
+                <div class="topic">{{question.topic}}</div>
+            </div>
+            <div class="question-header-div">
+                <div class="question-header"><a class="question-link" href="{% url "question-page" question.id %}">{{question.header}}</a></div>
+            </div>
+            <div class="created-edited-div">
+                <div class="created">{{question.created|timesince}}</div>
+                {% if question.created != question.updated %}
+                <div class="created">Edited</div>
+                {% endif %}
+            </div>
+            <div class="delete-edit-div">
+            {% if request.user == question.user %}
+                <a class="delete-edit" href="{% url "delete-question"  question.id %}">delete</a>
+                <a class="delete-edit" href="{% url "update-question"  question.id %}">edit</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <hr>
+        {% endfor %}
+  
+-->
+
+
+
+
+
+
+
+
+
+

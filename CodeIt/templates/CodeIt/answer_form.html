@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+<div class="answer-submit-main-div">
+
+    <div class="question-div-question-page">
+        <div class="question-votes-div">
+            {{questions.votes}}
+        </div>
+        <div class="question-info-div">
+            <div class="user-div">
+                <span class="user-span">@{{questions.user}}</span>
+            </div>
+            <div class="topic-div">
+                <span class="topic-span">{{questions.topic}}</span>
+            </div>
+            <div class="question-header-div">
+                <span class="question-header-span">{{questions.header}}</span>
+            </div>
+            <div class="question-body-div">
+                <span class="question-body-span">{{questions.body}}</span>
+            </div>
+            <div class="question-code-div">
+                <span class="question-code-span">{{questions.code}}</span>
+            </div>
+            <div class="created-edit-delete-div">
+                <div class="created-edited-div">
+                    <span class="created-div">{{questions.created|timesince}}</span>
+                    <span class="edited-div">{% if questions.created != questions.updated %}[EDITED]{% endif %}</span>
+                </div>
+                <div class="edit-delete-div">
+                    {% if request.user == questions.user %}
+                    <a class="edit-delete" href="{% url "delete-question"  questions.id %}">Delete</a>
+                    <a class="edit-delete" href="{% url "update-question"  questions.id %}">Edit</a>
+                    {% endif %}
+                </div>
+            </div>
+            <span class="reply">
+                <a href="{% url 'answer-submit' questions.id %}">&rdca;Reply</a>
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-div">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="submit" />
+    </form>
+    </div>
+</div>
+
+
+
+{% endblock content %}
