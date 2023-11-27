@@ -7,7 +7,9 @@
 
     <div class="question-div-question-page">
         <div class="question-votes-div">
-            {{questions.votes}}
+            <a href="{% url 'question-vote' questions.id 1 %}">&#129093;</a>
+                {{questions.votes}}
+            <a href="{% url 'question-vote' questions.id -1 %}">&#129095;</a>
         </div>
         <div class="question-info-div">
             <div class="user-div">

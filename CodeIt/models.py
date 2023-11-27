@@ -39,3 +39,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body
+
+class Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, null=True, blank=True, on_delete=models.CASCADE)
+    vote = models.CharField(max_length=10, null=True)
+
+    class Meta:
+        unique_together = ('user', 'question', 'answer', 'comment')
