@@ -17,5 +17,8 @@ urlpatterns = [
     path('delete-comment/<str:pk>/', views.deleteComment, name='delete-comment'),
     path('update-answer/<str:pk>/', views.updateAnswer, name='update-answer'),
     path('update-comment/<str:pk>/', views.updateComment, name='update-comment'),
+    path('question-vote/<str:pk>/<str:value>', views.questionVote, name='question-vote'),
+    path('answer-vote/<str:pk>/<str:value>', views.answerVote, name='answer-vote'),
+    path('comment-vote/<str:pk>/<str:value>', views.commentVote, name='comment-vote'),
 
 ]

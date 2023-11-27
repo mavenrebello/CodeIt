@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .models import Question, Answer, Comment
+from .models import Question, Answer, Comment, Vote
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -200,3 +200,86 @@ def deleteComment(request, pk):
         return redirect(redirect_url)
     return render(request, 'CodeIt/delete.html', {'obj':comment})
         
+
+def questionVote(request, pk, value):
+    question=Question.objects.get(id=pk)
+    user=request.user
+    value=int(value)
+    vote='upvote'
+    if value < 0:
+        vote='downvote'
+
+    if not Vote.objects.filter(user=user, question=question).exists():
+        Vote.objects.create(user=user, question=question, vote=vote)
+        question.votes += value
+        question.save()
+    elif Vote.objects.filter(user=user, question=question).exists():
+        temp=Vote.objects.get(user=user, question=question)
+        if temp.vote == vote:
+            Vote.objects.filter(user=user, question=question, vote=vote).delete()
+            question.votes -= value
+            question.save()
+        else:
+            Vote.objects.filter(user=user, question=question).delete()
+            Vote.objects.create(user=user, question=question, vote=vote)
+            value *= 2
+            question.votes += value
+            question.save()            
+
+    return redirect(request.META['HTTP_REFERER'])
+        
+
+def answerVote(request, pk, value):
+    answer=Answer.objects.get(id=pk)
+    user=request.user
+    value=int(value)
+    vote='upvote'
+    if value < 0:
+        vote='downvote'
+
+    if not Vote.objects.filter(user=user, answer=answer).exists():
+        Vote.objects.create(user=user, answer=answer, vote=vote)
+        answer.votes += value
+        answer.save()
+    elif Vote.objects.filter(user=user, answer=answer).exists():
+        temp=Vote.objects.get(user=user, answer=answer)
+        if temp.vote == vote:
+            Vote.objects.filter(user=user, answer=answer, vote=vote).delete()
+            answer.votes -= value
+            answer.save()
+        else:
+            Vote.objects.filter(user=user, answer=answer).delete()
+            Vote.objects.create(user=user, answer=answer, vote=vote)
+            value *= 2
+            answer.votes += value
+            answer.save()            
+
+    return redirect(request.META['HTTP_REFERER'])
+
+        
+def commentVote(request, pk, value):
+    comment=Comment.objects.get(id=pk)
+    user=request.user
+    value=int(value)
+    vote='upvote'
+    if value < 0:
+        vote='downvote'
+
+    if not Vote.objects.filter(user=user, comment=comment).exists():
+        Vote.objects.create(user=user, comment=comment, vote=vote)
+        comment.votes += value
+        comment.save()
+    elif Vote.objects.filter(user=user, comment=comment).exists():
+        temp=Vote.objects.get(user=user, comment=comment)
+        if temp.vote == vote:
+            Vote.objects.filter(user=user, comment=comment, vote=vote).delete()
+            comment.votes -= value
+            comment.save()
+        else:
+            Vote.objects.filter(user=user, comment=comment).delete()
+            Vote.objects.create(user=user, comment=comment, vote=vote)
+            value *= 2
+            comment.votes += value
+            comment.save()            
+
+    return redirect(request.META['HTTP_REFERER'])

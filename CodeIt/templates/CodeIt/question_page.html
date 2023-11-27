@@ -5,7 +5,9 @@
 <div class="question-page-main-div">
     <div class="question-div-question-page">
         <div class="question-votes-div">
+            <a href="{% url 'question-vote' questions.id 1 %}">&#129093;</a>
             {{questions.votes}}
+            <a href="{% url 'question-vote' questions.id -1 %}">&#129095;</a>
         </div>
         <div class="question-info-div">
             <div class="user-div">
@@ -43,7 +45,9 @@
     {% for answer in answers %}
     <div class="answer-main-div">
         <div class="answer-votes-div">
-        {{answer.votes}}
+            <a href="{% url 'answer-vote' answer.id 1 %}">&#129093;</a>
+            {{answer.votes}}
+            <a href="{% url 'answer-vote' answer.id -1 %}">&#129095;</a>
         </div>
         <div class="answer-info-div">
             <div class="user-answer-div">
@@ -76,7 +80,9 @@
                
                     {% if comment.answer == answer %}
                         <div class="comment-votes-div">
+                            <a href="{% url 'comment-vote' comment.id 1 %}">&#129093;</a>
                             {{comment.votes}}
+                            <a href="{% url 'comment-vote' comment.id -1 %}">&#129095;</a>
                         </div>
                         <div class="comment-info-div">
                             <div class="comment-user-div">

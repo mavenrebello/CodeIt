@@ -10,7 +10,9 @@
 
     <div class="answer-main-div">
         <div class="answer-votes-div">
-        {{answer.votes}}
+            <a href="{% url 'answer-vote' answer.id 1 %}">&#129093;</a>
+                {{answer.votes}}
+            <a href="{% url 'answer-vote' answer.id -1 %}">&#129095;</a>
         </div>
         <div class="answer-info-div">
             <div class="user-answer-div">
